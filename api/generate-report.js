@@ -282,7 +282,7 @@ module.exports = async (req, res) => {
       contentType: 'application/pdf',
     });
 
-    res.status(200).json({ success: true, url: blob.url, filename });
+   res.status(200).json({ success: true, url: blob.url, filename, email: data.email });
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ success: false, error: err.message });
