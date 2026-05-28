@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "PDF generation API for Culture Alignment Demo Assessment",
   "dependencies": {
-    "pdfkit": "^0.14.0"
+    "pdfkit": "^0.14.0",
+    "@vercel/blob": "^0.27.0"
   }
 }
