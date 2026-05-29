@@ -82,10 +82,10 @@ function calcScores(sv, cv) {
 
   const leaderScore = mc1 + mc2 + mc3 + mc4;
 
-  const rawBetter  = sliderScore(s2,'left') + sliderScore(s3,'left') + sliderScore(s4,'right') + sliderScore(s5,'left') + sliderScore(s6,'middle') + mc1 + mc2 + mc4;
-  const rawFaster  = sliderScore(s1,'right') + sliderScore(s4,'middle') + sliderScore(s5,'middle') + sliderScore(s6,'right') + mc3;
-  const mc2_cheaper = 5 - mc2; // inverts c2: politics=4, historical=3, feedback=2, future=1
-const rawCheaper = sliderScore(s2,'right') + sliderScore(s3,'left') + sliderScore(s4,'left') + sliderScore(s5,'right') + sliderScore(s6,'left') + mc2_cheaper;
+  const rawBetter   = sliderScore(s2,'left') + sliderScore(s3,'left') + sliderScore(s4,'right') + sliderScore(s5,'left') + sliderScore(s6,'middle') + mc1 + mc2 + mc4;
+  const rawFaster   = sliderScore(s1,'right') + sliderScore(s4,'middle') + sliderScore(s5,'middle') + sliderScore(s6,'right') + mc3;
+  const mc2_cheaper = 5 - mc2;
+  const rawCheaper  = sliderScore(s2,'right') + sliderScore(s3,'left') + sliderScore(s4,'left') + sliderScore(s5,'right') + sliderScore(s6,'left') + mc2_cheaper;
 
   return {
     leaderScore,
@@ -96,9 +96,9 @@ const rawCheaper = sliderScore(s2,'right') + sliderScore(s3,'left') + sliderScor
 }
 
 function getLeaderType(score) {
-  if (score >= 13) return { type: 'Customer-Driven',   color: GREEN,  text: 'You are Customer-driven. Stay sharp with predictive thinking and embedded leadership rituals. Maintain forecasting rituals. Codify empowerment into training. Embed customer metrics into daily dashboards. Celebrate proactive service wins and learn how to stay customer-driven.' };
-  if (score >= 10) return { type: 'Customer-Centric',  color: ACCENT, text: 'You are likely Customer-centric. Solid strategy in place — now institutionalize systems and habits. Turn data into action cycles. Add OKRs tied to customer outcomes rather than scores tied to bonuses. Embed customer insights into strategy development.' };
-  if (score >= 7)  return { type: 'Customer-Tolerant', color: ORANGE, text: 'You are likely Customer-tolerant. Focus on accountability, speed to action, and creating customer ownership. Close feedback loops within 30 days. Tie NPS/CSAT to executive OKRs. Empower a Chief Experience Officer to own CX end-to-end.' };
+  if (score >= 13) return { type: 'Customer-Driven',   color: GREEN,     text: 'You are Customer-driven. Stay sharp with predictive thinking and embedded leadership rituals. Maintain forecasting rituals. Codify empowerment into training. Embed customer metrics into daily dashboards. Celebrate proactive service wins and learn how to stay customer-driven.' };
+  if (score >= 10) return { type: 'Customer-Centric',  color: ACCENT,    text: 'You are likely Customer-centric. Solid strategy in place — now institutionalize systems and habits. Turn data into action cycles. Add OKRs tied to customer outcomes rather than scores tied to bonuses. Embed customer insights into strategy development.' };
+  if (score >= 7)  return { type: 'Customer-Tolerant', color: ORANGE,    text: 'You are likely Customer-tolerant. Focus on accountability, speed to action, and creating customer ownership. Close feedback loops within 30 days. Tie NPS/CSAT to executive OKRs. Empower a Chief Experience Officer to own CX end-to-end.' };
   return                  { type: 'Customer-Avoidant', color: '#B02020', text: 'You are likely in the Customer-avoidant zone. Start by building empathy, accountability, and basic customer systems.' };
 }
 
@@ -172,9 +172,9 @@ function generatePDF(data) {
     const sv = [s1, s2, s3, s4, s5, s6].map(Number);
     const cv = [c1, c2, c3, c4];
 
-    const scores    = calcScores(sv, cv);
-    const leader    = getLeaderType(scores.leaderScore);
-    const clashes   = detectClashes(sv, cv);
+    const scores  = calcScores(sv, cv);
+    const leader  = getLeaderType(scores.leaderScore);
+    const clashes = detectClashes(sv, cv);
 
     const doc = new PDFDocument({ size: 'LETTER', margin: 56, bufferPages: true });
     const chunks = [];
@@ -218,9 +218,9 @@ function generatePDF(data) {
 
     // ── BFC Thermometers ──
     needPage(170);
-    doc.fillColor(DARK).font('Helvetica-Bold').fontSize(15).text('Your Culture Metrics', ML, y);
-    doc.rect(ML, y + 19, 36, 2).fill(ACCENT);
-    y += 32;
+    doc.fillColor(DARK).font('Helvetica-Bold').fontSize(15).text("Your Culture's Center of Gravity across Better-Faster-Cheaper", ML, y, { width: CW });
+    doc.rect(ML, y + 22, 36, 2).fill(ACCENT);
+    y += 36;
 
     const metrics = [
       { label: 'BETTER',  score: scores.better,  color: ACCENT, tagline: 'Customer-led thinking & insight quality' },
@@ -228,8 +228,8 @@ function generatePDF(data) {
       { label: 'CHEAPER', score: scores.cheaper, color: ORANGE, tagline: 'Operational efficiency & cost mindset' },
     ];
 
-    const barW = CW - 28;
-    const barH = 20;
+    const barW  = CW - 28;
+    const barH  = 20;
     const mBoxH = metrics.length * (14 + 16 + barH + 14) + 28;
     needPage(mBoxH);
     doc.rect(ML, y, CW, mBoxH).fill(BG);
@@ -247,16 +247,24 @@ function generatePDF(data) {
       my += 14;
     });
 
-    y += mBoxH + 16;
+    y += mBoxH + 10;
 
-    // ── Strategic Takeaways ──
-    needPage(32);
+    // ── BFC explanatory note ──
+    const gravityNote = 'These cultural traits are all valuable, and even companies with high scores have room for improvement to further strengthen their brand promise. Getting your unique combination right is part of reinforcing the congruence of your CX and brand promise.';
+    const gravityH = doc.font('Helvetica').fontSize(10).heightOfString(gravityNote, { width: CW, lineGap: 2 }) + 16;
+    needPage(gravityH);
+    doc.fillColor(MID).font('Helvetica').fontSize(10).text(gravityNote, ML, y, { width: CW, lineGap: 2 });
+    y += gravityH + 6;
+
+    // ── Strategic Takeaways — always starts on a new page ──
+    doc.addPage();
+    y = 56;
     doc.fillColor(DARK).font('Helvetica-Bold').fontSize(15).text('Strategic Takeaways', ML, y);
     doc.rect(ML, y + 19, 36, 2).fill(ORANGE);
     y += 32;
 
     if (clashes.length === 0) {
-      const noClashText = 'Your scores indicate a high degree of harmony between your strategic ambitions and your cultural infrastructure. You are avoiding the common traps of "performative empowerment" or "management by spreadsheet." However, alignment is not a destination; it requires constant maintenance as you scale. Your next step is to look at these baselines and identify which single trait you can leverage as your "superpower" to accelerate growth in the next quarter.';
+      const noClashText = 'Your scores indicate a high degree of harmony between your strategic ambitions and your cultural norms. You are avoiding the common traps of "performative empowerment" or "management by spreadsheet." However, alignment is not a destination; it requires constant leadership attention as you scale. Your next step is to look at these baselines and identify which cultural traits you can leverage as your "superpower" to accelerate growth in the next quarter.';
       const ncH = doc.font('Helvetica').fontSize(10).heightOfString(noClashText, { width: CW - 28, lineGap: 2 }) + 46;
       needPage(ncH + 8);
       doc.rect(ML, y, CW, ncH).fill(GBG);
@@ -303,7 +311,7 @@ function generatePDF(data) {
     // Slider response cards
     sv.forEach((val, i) => {
       const sentence = getSliderSentence(i, val);
-      const qH = doc.font('Helvetica').fontSize(9).heightOfString(SLIDER_QUESTIONS[i], { width: CW - 28 });
+      const qH  = doc.font('Helvetica').fontSize(9).heightOfString(SLIDER_QUESTIONS[i], { width: CW - 28 });
       const boxH = Math.max(72, 14 + 16 + qH + 22 + 14);
       needPage(boxH + 8);
       doc.rect(ML, y, CW, boxH).fill(BG);
@@ -325,7 +333,7 @@ function generatePDF(data) {
 
     // Choice response cards
     cv.forEach((val, i) => {
-      const qH = doc.font('Helvetica').fontSize(9).heightOfString(CHOICE_QUESTIONS[i], { width: CW - 28 });
+      const qH  = doc.font('Helvetica').fontSize(9).heightOfString(CHOICE_QUESTIONS[i], { width: CW - 28 });
       const boxH = Math.max(56, 14 + 16 + qH + 16);
       needPage(boxH + 8);
       doc.rect(ML, y, CW, boxH).fill(BG);
@@ -337,27 +345,27 @@ function generatePDF(data) {
       y += boxH + 6;
     });
 
-// Trim trailing blank pages
-while (doc.bufferedPageRange().count > 1) {
-  const total = doc.bufferedPageRange().count;
-  doc.switchToPage(total - 1);
-  if (doc.y < 150) {
-    doc._pageBuffer.pop();
-  } else {
-    break;
-  }
-}
+    // ── Trim trailing blank pages ──
+    while (doc.bufferedPageRange().count > 1) {
+      const total = doc.bufferedPageRange().count;
+      doc.switchToPage(total - 1);
+      if (doc.y < 150) {
+        doc._pageBuffer.pop();
+      } else {
+        break;
+      }
+    }
 
-// Add footers
-doc.flushPages();
-const totalPages = doc.bufferedPageRange().count;
-for (let p = 0; p < totalPages; p++) {
-  doc.switchToPage(p);
-  doc.fillColor(LIGHT).font('Helvetica').fontSize(8)
-     .text(`Customer-Driven Leader Assessment  ·  Confidential  ·  Page ${p + 1} of ${totalPages}`, ML, 756, { width: CW });
-}
+    // ── Page footers ──
+    doc.flushPages();
+    const totalPages = doc.bufferedPageRange().count;
+    for (let p = 0; p < totalPages; p++) {
+      doc.switchToPage(p);
+      doc.fillColor(LIGHT).font('Helvetica').fontSize(8)
+         .text(`Customer-Driven Leader Assessment  ·  Confidential  ·  Page ${p + 1} of ${totalPages}`, ML, 756, { width: CW });
+    }
 
-doc.end();
+    doc.end();
   });
 }
 
