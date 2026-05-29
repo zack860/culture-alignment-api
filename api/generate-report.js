@@ -110,28 +110,28 @@ function detectClashes(sv, cv) {
   const clashes = [];
 
   if (c3 === 'Fully trusted to act on behalf of the customer' && lo(s1))
-    clashes.push({ title: 'Performative Empowerment', text: 'The Clash: Frontline is highly empowered (Faster), BUT the overall culture requires formal approvals for decisions (Slow). You give lip service to customer obsession, but your internal engine is bogged down by bureaucracy. You are putting a band-aid on a broken internal process, meaning your frontline is likely burning out trying to hack your own system to help the customer.' });
+    clashes.push({ title: 'Performative Empowerment', text: 'You aspire to customer obsession, but your cultural norms fall short. You aim to empower your frontline employees, but you still require formal approvals. Your frontline is likely burning out trying to hack your own system to help the customer.' });
 
   if (hi(s4) && c1 === 'Rarely or never')
-    clashes.push({ title: 'Ivory Tower Innovation', text: 'The Clash: Focus is heavily on big, bold ideas (Better), BUT leaders rarely engage directly with real customers (Avoidant). Your leadership team is swinging for the fences, but they are doing it blindfolded. Bold ideas built on internal assumptions rather than lived customer friction lead to expensive products that no one actually wants. You have a high risk of product-market-fit failure.' });
+    clashes.push({ title: 'Ivory Tower Innovation', text: 'Your leadership team is swinging for the fences, but they are doing it blindfolded. Bold ideas built on internal assumptions rather than lived customer experiences leads high risk your products, services, and digital experiences miss the mark.' });
 
   if (hi(s6) && lo(s1))
-    clashes.push({ title: 'The "Brakes & Gas" Frustration', text: 'The Clash: You have a high tolerance for risk (Faster), BUT work requires strict, formal chains of command/approvals. Your culture wants to move fast and break things, but your structural bureaucracy refuses to let them. This mismatch creates massive internal friction, driving away top talent who feel like they are driving a sports car in a traffic jam.' });
+    clashes.push({ title: 'The "Brakes & Gas" Frustration', text: 'Your culture wants to move fast and break things, but your processes and policies get in the way. This mismatch creates internal friction, which may be driving away top talent who feel like they are driving a sports car in a traffic jam.' });
 
   if (c3 === 'Fully trusted to act on behalf of the customer' && hi(s5))
-    clashes.push({ title: 'Fragmented Empathy', text: 'The Clash: Frontline is empowered to solve issues, BUT employees show intense loyalty to their specific departments/silos (Cheaper). Individual employees give great service, but the overall customer journey is a disaster. Because departments operate as isolated tribes, hand-offs between teams are clunky and hostile. You are making the customer feel the weight of your org chart.' });
+    clashes.push({ title: 'Fragmented Empathy', text: 'Individual employees give great service, but the overall customer journey has too many meh moments. Hand-offs between teams are clunky and error prone. You are making the customer feel the weight of your org chart.' });
 
   if (c4 === 'Integrated into daily dashboards and product decisions' && c1 === 'Rarely or never')
-    clashes.push({ title: 'Management by Spreadsheet', text: 'The Clash: Customer data is highly integrated into dashboards and decisions (Better), BUT leaders never actually speak to them (Avoidant). You are customer-tolerant, not customer-driven. By viewing customers merely as data points and metrics rather than humans, your leadership team is totally insulated from shifting market sentiments. You will miss the qualitative "why" behind the quantitative "what."' });
+    clashes.push({ title: 'Management by Spreadsheet', text: 'By viewing customers as data points and metrics rather than humans, your leadership team risks being insulated from market shifts. You risk missing the qualitative "why" behind the quantitative "what."' });
 
   if (hi(s4) && lo(s6))
-    clashes.push({ title: 'Aspirational Paralysis', text: 'The Clash: The focus is on disruptive, big picture ideas (Better), BUT the organization is highly risk-averse (Cheaper). Your organization wants to innovate, but structurally punishes the failure required to get there. Because your risk tolerance is zero, your boldest ideas will be watered down by committee until they are completely unrecognizable by the time they hit the market.' });
+    clashes.push({ title: 'Aspirational Paralysis', text: 'Your organization wants to innovate and drive continuous learning, but structurally punishes the experimentation required to get there. Your boldest ideas will be watered down by the time they hit the market.' });
 
   if (lo(s2) && c2 === 'Internal politics, founder legacy, or gut feel')
-    clashes.push({ title: 'Stifled Scaling', text: 'The Clash: Pure growth mentality at all costs (Better), BUT leadership decisions are driven by internal politics or founder legacy (Cheaper). You have the ambition to scale, but your growth is actively bottlenecked by ego and outdated operating models at the very top. You cannot scale a future-facing business using a backward-looking leadership framework.' });
+    clashes.push({ title: 'Stifled Scaling', text: 'You have the ambition to scale, but your growth is held back by ego and rigid operating models. You cannot scale a future-facing business using a backward-looking leadership framework.' });
 
   if (c3 === 'Fully trusted to act on behalf of the customer' && hi(s3))
-    clashes.push({ title: 'The "Firefighter" Exhaustion', text: 'The Clash: Frontline is highly empowered (Faster), BUT the overall organization is entirely reactive to issues (Cheaper). You have incredible "firefighters," but you are constantly burning down your own house. Because your leadership refuses to proactively fix root causes upstream, your empowered frontline is exhausted from playing endless whack-a-mole with easily preventable customer issues.' });
+    clashes.push({ title: 'The "Firefighter" Exhaustion', text: 'You have incredible "firefighters," but you are constantly burning down your own house. Because your leadership refuses to proactively fix root causes upstream, your empowered frontline is exhausted from playing endless whack-a-mole.' });
 
   if (c4 === 'Integrated into daily dashboards and product decisions' && lo(s1))
     clashes.push({ title: 'Data-Rich, Action-Poor', text: 'The Clash: Customer data is highly integrated into workflows (Better), BUT employees require formal approvals to make decisions (Slow). You have all the answers, but you move too slowly to capitalize on them. By the time a data-backed recommendation makes it through your extensive chain of command, the market has already moved on. Your insights are expiring before they can be executed.' });
@@ -140,7 +140,7 @@ function detectClashes(sv, cv) {
     clashes.push({ title: 'The HiPPO Syndrome', text: 'The Clash: Customer data is widely distributed and analyzed (Better), BUT leadership decisions are still driven by internal politics or gut-feel (Cheaper). Your data is just window dressing. You invest heavily in Voice of the Customer tools and dashboards, but at the end of the day, the "HiPPO" (Highest Paid Person\'s Opinion) still dictates your strategy.' });
 
   if (lo(s2) && hi(s3))
-    clashes.push({ title: 'Unfunded Mandates', text: 'The Clash: The focus is heavily on aggressive growth (Better), BUT the organization only addresses operational issues reactively (Cheaper). You are stepping on the gas without looking at the road ahead. You have aggressive growth mandates, but because you refuse to invest in proactive infrastructure, your scaling efforts will constantly be derailed by unforeseen operational bottlenecks.' });
+    clashes.push({ title: 'Unfunded Mandates', text: 'You are stepping on the gas without looking at the road ahead. You have aggressive growth mandates, but because you still take a more reactive approach to CX, your scaling efforts risk getting derailed by operational bottlenecks.' });
 
   return clashes;
 }
