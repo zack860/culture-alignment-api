@@ -84,7 +84,8 @@ function calcScores(sv, cv) {
 
   const rawBetter  = sliderScore(s2,'left') + sliderScore(s3,'left') + sliderScore(s4,'right') + sliderScore(s5,'left') + sliderScore(s6,'middle') + mc1 + mc2 + mc4;
   const rawFaster  = sliderScore(s1,'right') + sliderScore(s4,'middle') + sliderScore(s5,'middle') + sliderScore(s6,'right') + mc3;
-  const rawCheaper = sliderScore(s2,'right') + sliderScore(s3,'left') + sliderScore(s4,'left') + sliderScore(s5,'right') + sliderScore(s6,'left') + mc4;
+  const mc2_cheaper = 5 - mc2; // inverts c2: politics=4, historical=3, feedback=2, future=1
+const rawCheaper = sliderScore(s2,'right') + sliderScore(s3,'left') + sliderScore(s4,'left') + sliderScore(s5,'right') + sliderScore(s6,'left') + mc2_cheaper;
 
   return {
     leaderScore,
