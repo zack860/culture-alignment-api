@@ -337,22 +337,24 @@ function generatePDF(data) {
       y += boxH + 6;
     });
 
-   // Remove trailing blank pages
-const range = doc.bufferedPageRange();
-const totalPages = range.count;
-const lastPageIdx = range.start + totalPages - 1;
-doc.switchToPage(lastPageIdx);
-const lastY = doc.y;
-if (lastY < 100) {
-  doc._pageBuffer.splice(lastPageIdx, 1);
+// Trim trailing blank pages
+while (doc.bufferedPageRange().count > 1) {
+  const total = doc.bufferedPageRange().count;
+  doc.switchToPage(total - 1);
+  if (doc.y < 150) {
+    doc._pageBuffer.pop();
+  } else {
+    break;
+  }
 }
 
-// Recalculate after possible removal
-const finalTotal = doc.bufferedPageRange().count;
-for (let p = 0; p < finalTotal; p++) {
+// Add footers
+doc.flushPages();
+const totalPages = doc.bufferedPageRange().count;
+for (let p = 0; p < totalPages; p++) {
   doc.switchToPage(p);
   doc.fillColor(LIGHT).font('Helvetica').fontSize(8)
-     .text(`Customer-Driven Leader Assessment  ·  Confidential  ·  Page ${p + 1} of ${finalTotal}`, ML, 756, { width: CW });
+     .text(`Customer-Driven Leader Assessment  ·  Confidential  ·  Page ${p + 1} of ${totalPages}`, ML, 756, { width: CW });
 }
 
 doc.end();
